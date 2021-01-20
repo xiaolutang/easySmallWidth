@@ -1,1 +1,2 @@
 smallWidth屏幕适配，打包实现
+easySmallWidth 设计背景
