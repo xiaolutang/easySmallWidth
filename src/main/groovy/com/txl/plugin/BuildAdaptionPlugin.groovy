@@ -13,6 +13,7 @@ import com.txl.plugin.task.ModuleAdaptionTask
 class BuildAdaptionPlugin implements Plugin<Project> {
     def BuildAdaptionPluginExtension appExtension
     void apply(Project project) {
+        System.out.println("start adaption version 1.0.0")
         appExtension = project.extensions.create('adaptionAppExtension', BuildAdaptionPluginExtension,project)//全局扩展属性
         appExtension.resPath = "${File.separator}src${File.separator}main${File.separator}res${File.separator}"
         appExtension.defaultDesignWidth = 360f
