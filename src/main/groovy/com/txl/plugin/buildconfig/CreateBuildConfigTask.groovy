@@ -1,7 +1,7 @@
 package com.txl.plugin.buildconfig
 
-import com.squareup.javapoet.JavaFile
-import com.squareup.javapoet.TypeSpec
+//import com.squareup.javapoet.JavaFile
+//import com.squareup.javapoet.TypeSpec
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
@@ -17,18 +17,18 @@ class CreateBuildConfigTask extends DefaultTask {
     @TaskAction
     void doTask() {
         //生成java类
-        TypeSpec.Builder builder = TypeSpec.classBuilder(fileName)
-                .addModifiers(Modifier.PUBLIC,Modifier.FINAL)
-                .addField(String.class,"VERSION_NAME",Modifier.PUBLIC,Modifier.STATIC,Modifier.FINAL)
-        JavaFile javaFile = JavaFile.builder(packageName, builder.build()).build()
-        //将java写入到文件夹下
-//        File file = new File(project.buildDir, "generated/source/container")
-        File file = new File(project.projectDir, filePath)
-        if (!file.exists()) {
-            file.mkdirs()
-        }
-        javaFile.writeTo(file)
-        println "[write to]: ${file.absolutePath}"
+//        TypeSpec.Builder builder = TypeSpec.classBuilder(fileName)
+//                .addModifiers(Modifier.PUBLIC,Modifier.FINAL)
+//                .addField(String.class,"VERSION_NAME",Modifier.PUBLIC,Modifier.STATIC,Modifier.FINAL)
+//        JavaFile javaFile = JavaFile.builder(packageName, builder.build()).build()
+//        //将java写入到文件夹下
+////        File file = new File(project.buildDir, "generated/source/container")
+//        File file = new File(project.projectDir, filePath)
+//        if (!file.exists()) {
+//            file.mkdirs()
+//        }
+//        javaFile.writeTo(file)
+//        println "[write to]: ${file.absolutePath}"
     }
 
 }

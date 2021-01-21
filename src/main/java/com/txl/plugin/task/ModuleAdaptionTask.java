@@ -28,28 +28,28 @@ public class ModuleAdaptionTask extends DefaultTask{
      * 默认设计及图宽度
      * */
     @Input
-    float defaultDesignWidth = 360f;
+    public float defaultDesignWidth = 360f;
     /**
      * 需要适配的最小宽度  比如 {400f,411f,480f}单位是dp，这个值不在每个模块单独设置，由总体配置来
      * */
     @Input
-    Set<Integer> needToAdaptedWidth = new HashSet<Integer>();
+    public Set<Integer> needToAdaptedWidth = new HashSet<Integer>();
     /**
      * 转换因子,默认不进行设置
      * */
     @Input
-    Map<Integer,Float> conversionMap = new HashMap<>();
+    public Map<Integer,Float> conversionMap = new HashMap<>();
 
     /**
      * 是否开启适配
      * */
     @Input
-    boolean enableAdapter = true;
+    public boolean enableAdapter = true;
     /**
      * 资源路径，默认src/main/res
      * */
     @Input
-    String resPath = "";
+    public String resPath = "";
 
     @TaskAction
     void adaption(){

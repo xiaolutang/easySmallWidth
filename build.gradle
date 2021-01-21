@@ -5,7 +5,7 @@ apply plugin: 'maven'
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    implementation 'com.squareup:javapoet:1.9.0'
+//    implementation 'com.squareup:javapoet:1.9.0'
 }
 
 allprojects {

@@ -17,10 +17,7 @@ class BuildAdaptionPlugin implements Plugin<Project> {
         appExtension = project.extensions.create('adaptionAppExtension', BuildAdaptionPluginExtension,project)//全局扩展属性
         appExtension.resPath = "${File.separator}src${File.separator}main${File.separator}res${File.separator}"
         appExtension.defaultDesignWidth = 360f
-        appExtension.needToAdaptedWidth.add(411)
         handleProject(project.rootProject)
-
-        appExtension.subAdaptionPluginExtensionMapProperty.put("sa",new BuildAdaptionPluginExtension(project))
     }
 
     private void handleProject(Project project){
@@ -31,37 +28,37 @@ class BuildAdaptionPlugin implements Plugin<Project> {
         println("config project ${project.name}")
         def taskModuleAdaption = project.tasks.register("${project.name}BuildAdaption",ModuleAdaptionTask)
         taskModuleAdaption.configure{
-            doFirst {
-                def moduleExtensionProvider = appExtension.subAdaptionPluginExtensionMapProperty.getting(project.name)
-                BuildAdaptionPluginExtension me = moduleExtensionProvider.orNull
-                handleModuleAdaptionTaskProperty(taskModuleAdaption.get(),appExtension,me)
+            doFirst {//此处的代码可以考虑移动到project.afterEvaluate
+
             }
         }
         project.afterEvaluate{
             try {
+                def moduleExtensionProvider = appExtension.subAdaptionPluginExtensionMapProperty.getting(project.name)
+                BuildAdaptionPluginExtension me = moduleExtensionProvider.orNull
+                handleModuleAdaptionTaskProperty(taskModuleAdaption.get(),appExtension,me)
+                if(!taskModuleAdaption.get().enableAdapter){
+                    return
+                }
                 project.getTasks()
                 def preBuild = project.getTasks().getByName("preBuild")
                 preBuild.configure {
-                    dependsOn taskModuleAdaption
+                    dependsOn taskModuleAdaption.get()
                 }
             }catch(Exception e){
                 e.printStackTrace()
             }
         }
         def taskDeleteModuleAdaption = project.tasks.register("${project.name}DeleteBuildAdaption",ModuleDeleteAdaptionTask)
-        taskDeleteModuleAdaption.configure{
-            doFirst {
+        project.afterEvaluate{
+            try {
                 def moduleExtensionProvider = appExtension.subAdaptionPluginExtensionMapProperty.getting(project.name)
                 BuildAdaptionPluginExtension me = moduleExtensionProvider.orNull
                 handleDeleteModuleAdaptionTaskProperty(taskDeleteModuleAdaption.get(),appExtension,me)
-            }
-        }
-        project.afterEvaluate{
-            try {
                 project.getTasks()
                 def preBuild = project.getTasks().getByName("clean")
                 preBuild.configure {
-                    dependsOn taskDeleteModuleAdaption
+                    dependsOn taskDeleteModuleAdaption.get()
                 }
             }catch(Exception e){
                 e.printStackTrace()

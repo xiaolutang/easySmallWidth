@@ -5,6 +5,7 @@ import com.txl.plugin.xmlutils.FileUtil;
 import com.txl.plugin.xmlutils.FileX;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 
@@ -18,6 +19,7 @@ import java.util.Set;
  * 删除 {@link ModuleAdaptionTask} 创建的文件
  * */
 public class ModuleDeleteAdaptionTask extends DefaultTask{
+    private final static String TAG = "ModuleDeleteAdaptionTask";
     /**
      * 默认设计及图宽度
      * */
@@ -47,10 +49,12 @@ public class ModuleDeleteAdaptionTask extends DefaultTask{
 
     @TaskAction
     void adaption(){
+        Project project = getProject();
         FileX filex = null;
         for (int item : needToAdaptedWidth){
             try{
                 String newFilePath = getProject().getProjectDir().getPath()+resPath+"values-sw"+item+"dp"+File.separator+"dimens.xml";
+                System.out.println(TAG +project.getName()+ " : delete file "+newFilePath);
                 filex = new FileX(newFilePath);
                 if(filex.exists()){
                     FileUtil.delFile(newFilePath);

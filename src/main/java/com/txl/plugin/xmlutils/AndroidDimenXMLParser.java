@@ -38,7 +38,7 @@ public class AndroidDimenXMLParser {
 
 				String key=androidNameNode.getNodeValue();
 				String value=node.getFirstChild().getNodeValue();
-				System.out.println(TAG+": key :"+key +"value : "+value+" node "+node.getFirstChild().getNodeValue());
+//				System.out.println(TAG+": key :"+key +"value : "+value+" node "+node.getFirstChild().getNodeValue());
 				map.put(key, value); 
 			}
 		}
@@ -78,19 +78,25 @@ public class AndroidDimenXMLParser {
 		Iterator<Entry<String, String>> iterator=map.entrySet().iterator();
 		StringBuilder builder=new StringBuilder();
 		builder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r<resources>\r");
-		try {
-			while(iterator.hasNext())
-			{
+		while(iterator.hasNext())
+		{
+			try {
 				Entry<String, String> entryA=iterator.next();
 				String key=entryA.getKey();
 				String value=entryA.getValue();
-				String end = value.substring(value.length()-2);
-				String start = value.substring(0,value.length()-2);
-				value = (Float.parseFloat(start) * scale)+end;
-				builder.append("		<dimen name=\""+key+"\">"+value+"</dimen>\r");
+				if(!value.startsWith("@")){//以 @开头的代表引用别处的值，原样拼装
+					int endIndex = 2;
+					if(value.contains("dip")){
+						endIndex =  3;
+					}
+					String end = value.substring(value.length()-endIndex);
+					String start = value.substring(0,value.length()-endIndex);
+					value = (Float.parseFloat(start) * scale)+end;
+				}
+				builder.append("		<dimen name=\"").append(key).append("\">").append(value).append("</dimen>\r");
+			}catch (Exception e){
+				e.printStackTrace();
 			}
-		}catch (Exception e){
-			e.printStackTrace();
 		}
 		builder.append("</resources>");
 		try 
