@@ -1,0 +1,57 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    implementation 'com.squareup:javapoet:1.9.0'
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+
+compileGroovy {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    options.encoding = "UTF-8"
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+def getProperty(String filename, String propName) {
+    def propsFile = rootProject.file(filename)
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        if (props[propName] != null) {
+            return props[propName]
+        } else {
+            print("No such property " + propName + " in file " + filename)
+        }
+    } else {
+        print(filename + " does not exist!")
+    }
+}
+
+
+//publish to local directory
+def versionName = getProperty("gradle.properties","versionName")
+group "com.txl.plugin"
+version versionName
+
+
+uploadArchives{ //当前项目可以发布到本地文件夹中
+    repositories {
+        mavenDeployer {
+            repository(url: uri('./repo')) //定义本地maven仓库的地址
+        }
+    }
+}
