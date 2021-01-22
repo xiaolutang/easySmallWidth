@@ -19,7 +19,7 @@ import java.util.Set;
  * 删除 {@link ModuleAdaptionTask} 创建的文件
  * */
 public class ModuleDeleteAdaptionTask extends DefaultTask{
-    private final static String TAG = "ModuleDeleteAdaptionTask";
+    private final static String TAG = "ModuleDeleteAdaptionTask    ";
     /**
      * 默认设计及图宽度
      * */
@@ -51,6 +51,7 @@ public class ModuleDeleteAdaptionTask extends DefaultTask{
     void adaption(){
         Project project = getProject();
         FileX filex = null;
+        System.out.println(TAG+" "+project.getName()+"  start delete size "+needToAdaptedWidth.size());
         for (int item : needToAdaptedWidth){
             try{
                 String newFilePath = getProject().getProjectDir().getPath()+resPath+"values-sw"+item+"dp"+File.separator+"dimens.xml";

@@ -60,7 +60,7 @@ public class ModuleAdaptionTask extends DefaultTask{
         }
         //强行指定路径来判断对应逻辑
         String originFilePath = project.getProjectDir().getPath()+resPath+"values"+ File.separator+"dimens.xml";
-        System.out.println("ModuleAdaptionTask name "+project.getName()+"  origin path "+originFilePath+" has sacle "+conversionMap);
+        System.out.println("ModuleAdaptionTask name "+project.getName()+" size "+needToAdaptedWidth.size()+" origin path "+originFilePath+" has sacle "+conversionMap);
         FileX filex = new FileX(originFilePath);
         if(!filex.exists()){
             return;
