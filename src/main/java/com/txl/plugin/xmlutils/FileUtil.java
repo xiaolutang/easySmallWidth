@@ -51,10 +51,10 @@ public class FileUtil {
 	/**
 	 * �����ļ�·��
 	 * 
-	 * @param dir
-	 * @param filename
-	 * @param suf
-	 * @return
+	 * @param dir 文件夹
+	 * @param filename 文件名
+	 * @param suf 后缀
+	 * @return  c
 	 */
 	public static String createFilePath(String dir, String filename, String suf) {
 		String filepath = null;
@@ -88,8 +88,8 @@ public class FileUtil {
 	/**
 	 * �½��ļ���
 	 * 
-	 * @param path
-	 * @return
+	 * @param path  地址
+	 * @return 文件
 	 */
 	public static File createDirectory(String path) {
 		File file;
@@ -108,8 +108,8 @@ public class FileUtil {
 	/**
 	 * �½��ļ�
 	 * 
-	 * @param path
-	 * @return
+	 * @param path  路径
+	 * @return 文件
 	 */
 	public static File createFile(String path) {
 		File file;
@@ -144,7 +144,7 @@ public class FileUtil {
 	 *            �ļ����� ".txt"
 	 * @param directory
 	 *            ��Ŀ¼
-	 * @return
+	 * @return  文件
 	 */
 	public static File createTempFile(String prefix, String suffix, File directory) {
 		File file;
@@ -161,22 +161,14 @@ public class FileUtil {
 	}
 
 	/**
-	 * ����޸�ʱ��
-	 * 
-	 * @param dir
-	 * @param filename
-	 * @param suf
-	 * @return
+	 *获取最后一次修改时间
 	 */
 	public static long lastModified(String dir, String filename, String suf) {
 		return lastModified( createFilePath( dir, filename, suf ) );
 	}
 
 	/**
-	 * ����޸�ʱ��
-	 * 
-	 * @param path
-	 * @return
+	 * 获取文件最后的修改时间
 	 */
 	public static long lastModified(String path) {
 		try {
@@ -192,10 +184,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * �ļ��Ƿ����
-	 * 
-	 * @param path
-	 * @return
+	 * 文件是否存在
 	 */
 	public static boolean hasFile(String path) {
 		boolean value = false;
@@ -212,10 +201,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * ɾ���ļ�
-	 * 
-	 * @param path
-	 * @return
+	 * 删除文件
 	 */
 	public static boolean delFile(String path) {
 		if (null == path || path.length() == 0)
@@ -234,10 +220,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * ɾ���ļ�
-	 * 
-	 * @param file
-	 * @return
+	 * 删除文件
 	 */
 	public static boolean delFile(File file) {
 		if (file.exists() && file.isFile()) {
@@ -463,11 +446,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * �����ļ�
-	 * 
-	 * @param ins
-	 * @param ops
-	 * @return
+	 * 文件复制
 	 */
 	public static boolean copyFile(InputStream ins, OutputStream ops) {
 		boolean result = false;
@@ -497,11 +476,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * �����ļ�
-	 * 
-	 * @param newPath
-	 * @param oldPath
-	 * @return
+	 * 文件复制
 	 */
 	public static boolean copyFile(String newPath, String oldPath) {
 		boolean result = false;
@@ -581,11 +556,7 @@ public class FileUtil {
 		return false;
 	}
 
-	/**
-	 * ��ʱ���������Ƭ����
-	 * 
-	 * @return
-	 */
+
 	public static String getPhotoFileName() {
 		Date date = new Date(System.currentTimeMillis());
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
