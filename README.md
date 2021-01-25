@@ -1,3 +1,9 @@
+# EasySmallWidth
+
+## 设计目的：
+
+让smallWidth屏幕适配更加灵活，容易，减轻开发者的维护难度。
+
 ## EasySmallWidth原理
 
 AndroidStudio通过Gradle进行打包，会经过 **Initialization**、**Configuration**、**Execution** 三个阶段。在configuration会读取所有项目的配置，并最终生成Gradle TASK执行的有相图。EasySmallWidth就是在Gradle 读取项目配置之后，生成有相图之前，插入自定义Task,让我们需要的dimens文件，先于构建Apk。通过观察Gradle打包生成apk的Task，不论是Android library 还是android application 在执行task之前都会执行 preBuild Task 。因此EasySmallWidth选取PreBuild作为插入点。进行适配工作。
