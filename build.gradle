@@ -2,6 +2,9 @@ buildscript {
     repositories {
         jcenter()
     }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.9.1'
+    }
 }
 // First, apply the publishing plugin
 plugins {
@@ -14,7 +17,19 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
+//应用发布使用的插件
+apply plugin: 'com.novoda.bintray-release'
 
+//添加发布相关的配置
+publish {
+    userOrg = 'tangxiaolu' //用户名
+    repoName = 'maven'	//仓库名，默认为maven
+    groupId = 'com.txl.EasySmallWidth'//代码库路径
+    artifactId = 'easySmallWidth'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'android SmallWidth 屏幕适配插件'//项目描述
+    website = 'https://github.com/xiaolutang/easySmallWidth'//项目对应网站
+}
 dependencies {
     compile gradleApi()
     compile localGroovy()
