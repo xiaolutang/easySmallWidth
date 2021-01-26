@@ -28,7 +28,9 @@ EasySmallWidth包含二级配置，总体配置，模块配置。具体的配置
 
 在根目录的build.gradle添加下面的代码
 
-![image-20210125210118474](img\根buildgradle引入.png)
+https://github.com/xiaolutang/easySmallWidth/blob/main/img/%E6%A0%B9buildgradle%E5%BC%95%E5%85%A5.png
+
+![image-20210125210118474](https://github.com/xiaolutang/easySmallWidth/blob/main/img/%E6%A0%B9buildgradle%E5%BC%95%E5%85%A5.png)
 
 ```groovy
 classpath 'com.txl.EasySmallWidth:easySmallWidth:1.0.0'
@@ -44,11 +46,11 @@ apply plugin: 'BuildAdaptionPlugin'
 
 插件引入成功后在模块的中可以看到EasySmallWidth为每个 模块添加的创建和删除适配文件的task
 
-![image-20210125210731910](img\每个模块的创建和删除适配文件task.png)
+![image-20210125210731910](https://github.com/xiaolutang/easySmallWidth/blob/main/img/%E6%AF%8F%E4%B8%AA%E6%A8%A1%E5%9D%97%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%A0%E9%99%A4%E9%80%82%E9%85%8D%E6%96%87%E4%BB%B6task.png)
 
 如果Android Studio 没有显示task  重新设置下下面的属性即可
 
-![image-20210125212842090](img\android_studio_显示gradleTask.png)
+![image-20210125212842090](https://github.com/xiaolutang/easySmallWidth/blob/main/img/android_studio_%E6%98%BE%E7%A4%BAgradleTask.png)
 
 **step3:添加配置项**
 
@@ -82,7 +84,7 @@ adaptionAppExtension{
 
 **app模块：**
 
-![image-20210125214106890](img\app模块的适配文件.png)
+![image-20210125214106890](https://github.com/xiaolutang/easySmallWidth/blob/main/img/app%E6%A8%A1%E5%9D%97%E7%9A%84%E9%80%82%E9%85%8D%E6%96%87%E4%BB%B6.png)
 
 
 
@@ -90,13 +92,13 @@ adaptionAppExtension{
 
 **aeasybuild模块：**
 
-![image-20210125214409760](img\aeasybuild模块适配文件.png)
+![image-20210125214409760](https://github.com/xiaolutang/easySmallWidth/blob/main/img/aeasybuild%E6%A8%A1%E5%9D%97%E9%80%82%E9%85%8D%E6%96%87%E4%BB%B6.png)
 
 可以看到   sw400dp中的 dimen值 = 400/375 * 实际值  符合SmallWidth要求  (我们在配置的时候将aeasybuild的默认宽度设置成立375dp)
 
 **testAutoBuildDimen模块：**
 
-![image-20210125214737257](img\testAutoBuild模块适配文件.png)
+![image-20210125214737257](https://github.com/xiaolutang/easySmallWidth/blob/main/img/testAutoBuild%E6%A8%A1%E5%9D%97%E9%80%82%E9%85%8D%E6%96%87%E4%BB%B6.png)
 
 为什么这个模块的值不是按照smallWidth来的呢？因为我们在前面配置的时候对它做了自定义转换，sw400与设计图1.0倍处理
 
