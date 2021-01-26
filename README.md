@@ -28,8 +28,6 @@ EasySmallWidth包含二级配置，总体配置，模块配置。具体的配置
 
 在根目录的build.gradle添加下面的代码
 
-https://github.com/xiaolutang/easySmallWidth/blob/main/img/%E6%A0%B9buildgradle%E5%BC%95%E5%85%A5.png
-
 ![image-20210125210118474](https://github.com/xiaolutang/easySmallWidth/blob/main/img/%E6%A0%B9buildgradle%E5%BC%95%E5%85%A5.png)
 
 ```groovy
