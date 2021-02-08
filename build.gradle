@@ -20,13 +20,14 @@ apply plugin: 'maven'
 //应用发布使用的插件
 apply plugin: 'com.novoda.bintray-release'
 
+def myVersion = "1.0.2"
 //添加发布相关的配置
 publish {
     userOrg = 'tangxiaolu' //用户名
     repoName = 'maven'	//仓库名，默认为maven
     groupId = 'com.txl.EasySmallWidth'//代码库路径
     artifactId = 'easySmallWidth'//项目名称
-    publishVersion = '1.0.0'//版本号
+    publishVersion = myVersion//版本号
     desc = 'android SmallWidth 屏幕适配插件'//项目描述
     website = 'https://github.com/xiaolutang/easySmallWidth'//项目对应网站
 }
@@ -69,7 +70,7 @@ def getProperty(String filename, String propName) {
 
 
 //publish to local directory
-def versionName = getProperty("gradle.properties","versionName")
+def versionName = myVersion
 group "com.txl.plugin"
 version versionName
 
@@ -140,7 +141,7 @@ pluginBundle {
             // id is captured from java-gradle-plugin configuration
             displayName = 'EasySmallWidth'
             tags = ['individual', 'tags', 'per', 'plugin']
-            version = '1.0.0'
+            version = myVersion
         }
     }
 
@@ -160,6 +161,6 @@ pluginBundle {
     mavenCoordinates {
         groupId = "com.txl.easySmallWidth"
         artifactId = "easySmallWidth"
-        version = "1.0.0"
+        version = myVersion
     }
 }
