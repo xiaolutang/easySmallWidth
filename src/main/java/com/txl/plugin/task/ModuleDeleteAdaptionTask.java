@@ -49,6 +49,9 @@ public class ModuleDeleteAdaptionTask extends DefaultTask{
 
     @TaskAction
     void adaption(){
+        if(!enableAdapter){
+            return;
+        }
         Project project = getProject();
         FileX filex = null;
         System.out.println(TAG+" "+project.getName()+"  start delete size "+needToAdaptedWidth.size());

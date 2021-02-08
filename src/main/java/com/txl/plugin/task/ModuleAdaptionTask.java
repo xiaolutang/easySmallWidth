@@ -3,6 +3,7 @@ package com.txl.plugin.task;
 import com.txl.plugin.xmlutils.AndroidDimenXMLParser;
 import com.txl.plugin.xmlutils.FileUtil;
 import com.txl.plugin.xmlutils.FileX;
+import com.txl.plugin.xmlutils.StringUtils;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
@@ -60,11 +61,26 @@ public class ModuleAdaptionTask extends DefaultTask{
         }
         //强行指定路径来判断对应逻辑
         String originFilePath = project.getProjectDir().getPath()+resPath+"values"+ File.separator+"dimens.xml";
-        System.out.println("ModuleAdaptionTask name "+project.getName()+" size "+needToAdaptedWidth.size()+" origin path "+originFilePath+" has sacle "+conversionMap);
+
         FileX filex = new FileX(originFilePath);
+        System.out.println("ModuleAdaptionTask name "+project.getName()+" size "+needToAdaptedWidth.size()+" origin path "+originFilePath+" has sacle "+conversionMap+"last change time  "+filex.lastModified());
         if(!filex.exists()){
             return;
         }
+//        String lastChangeTime = "";
+//        String lastChangeFilePath = project.getProjectDir().getPath()+"lastchange.txt";
+//        FileX lastChangeFile = new FileX(lastChangeFilePath);
+//        if(lastChangeFile.exists()){
+//            lastChangeTime = FileUtil.readTextFile(lastChangeFilePath).trim().replace("\n","");
+//            FileUtil.delFile(lastChangeFilePath);
+//        }
+//        boolean fileChange = true;
+//        if(lastChangeTime.equals(filex.lastModified()+"") && !StringUtils.isEmpty(lastChangeTime)){//文件未被修改
+//            fileChange = false;
+//        }
+//        System.out.println ("ModuleAdaptionTask "+project.getName()+" start adaption last change time "+lastChangeTime +"  fileChange "+fileChange);
+//        FileUtil.saveTextFile(lastChangeFilePath,filex.lastModified()+"");
+        long lastModified = filex.lastModified();
         Map<String,String> map = AndroidDimenXMLParser.readDimensXML(originFilePath);
         for (int item : needToAdaptedWidth){
             try{
@@ -74,6 +90,9 @@ public class ModuleAdaptionTask extends DefaultTask{
                 filex = new FileX(newFilePath);
                 if(!filex.exists()){
                     FileUtil.createFile(newFilePath);
+                }else if (filex.lastModified() == lastModified){//文件存在，且参考dimens未发生改变。不用重新生成适配文件
+                    System.out.println ("ModuleAdaptionTask "+project.getName()+" start adaption width "+item+"  file not change ");
+                    continue;
                 }
                 float scale = item/defaultDesignWidth;
                 if(conversionMap != null && conversionMap.containsKey(item)){
@@ -81,7 +100,9 @@ public class ModuleAdaptionTask extends DefaultTask{
                     System.out.println("ModuleAdaptionTask module "+project.getName()+" contain specail  "+item+"  sacle "+scale);
                 }
                 AndroidDimenXMLParser.saveMap2XML(map,newFilePath,defaultDesignWidth,item,scale);
-                System.out.println("ModuleAdaptionTask module "+getProject().getName()+"  adaption success width "+item+" newpath sacle "+scale);
+                boolean setLastModifiedSuccess = filex.setLastModified(lastModified);
+
+                System.out.println("ModuleAdaptionTask module "+getProject().getName()+"  adaption success width "+item+" newpath sacle "+scale + " setLastModifiedSuccess  "+setLastModifiedSuccess);
             }catch(Exception e1) {
                 e1.printStackTrace();
             }
