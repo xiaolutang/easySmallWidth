@@ -20,7 +20,7 @@ apply plugin: 'maven'
 //应用发布使用的插件
 apply plugin: 'com.novoda.bintray-release'
 
-def myVersion = "1.0.2"
+def myVersion = "1.0.3"
 //添加发布相关的配置
 publish {
     userOrg = 'tangxiaolu' //用户名

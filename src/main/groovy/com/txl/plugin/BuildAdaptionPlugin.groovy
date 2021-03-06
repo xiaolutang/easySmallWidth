@@ -29,26 +29,31 @@ class BuildAdaptionPlugin implements Plugin<Project> {
             handleProject(item)
         }
         println("config project ${project.name}  has preBuild Task ${project.hasProperty("preBuild")}")
-        def taskModuleAdaption = project.tasks.register("${project.name}BuildAdaption",ModuleAdaptionTask)
-        if(project.hasProperty("preBuild")){//已经拥有该属性，说明project  Evaluate 阶段已经完成
-            handleModuleCreateAdaptionTask(project, taskModuleAdaption)
-        }else {
-            project.afterEvaluate{
-                if(project.hasProperty("preBuild")){//在Evaluate之后还没有改属性说明不是android项目，不需要建立依赖关系
-                    handleModuleCreateAdaptionTask(project, taskModuleAdaption)
+        if(!project.tasks.hasProperty("${project.name}BuildAdaption")){
+            def taskModuleAdaption = project.tasks.register("${project.name}BuildAdaption",ModuleAdaptionTask)
+            if(project.hasProperty("preBuild")){//已经拥有该属性，说明project  Evaluate 阶段已经完成
+                handleModuleCreateAdaptionTask(project, taskModuleAdaption)
+            }else {
+                project.afterEvaluate{
+                    if(project.hasProperty("preBuild")){//在Evaluate之后还没有改属性说明不是android项目，不需要建立依赖关系
+                        handleModuleCreateAdaptionTask(project, taskModuleAdaption)
+                    }
                 }
             }
         }
-        def taskDeleteModuleAdaption = project.tasks.register("${project.name}DeleteBuildAdaption",ModuleDeleteAdaptionTask)
-        if(project.hasProperty("clean")){
-            handleDeleteModuleTask(project, taskDeleteModuleAdaption)
-        }else {
-            project.afterEvaluate{
-                if(project.hasProperty("clean")){
-                    handleDeleteModuleTask(project, taskDeleteModuleAdaption)
+        if(!project.tasks.hasProperty("${project.name}DeleteBuildAdaption")){
+            def taskDeleteModuleAdaption = project.tasks.register("${project.name}DeleteBuildAdaption",ModuleDeleteAdaptionTask)
+            if(project.hasProperty("clean")){
+                handleDeleteModuleTask(project, taskDeleteModuleAdaption)
+            }else {
+                project.afterEvaluate{
+                    if(project.hasProperty("clean")){
+                        handleDeleteModuleTask(project, taskDeleteModuleAdaption)
+                    }
                 }
             }
         }
+
     }
 
     private void handleDeleteModuleTask(Project project, TaskProvider<ModuleDeleteAdaptionTask> taskDeleteModuleAdaption) {
